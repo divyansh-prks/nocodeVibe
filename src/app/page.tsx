@@ -1,10 +1,25 @@
+import { caller, getQueryClient, trpc } from "@/trpc/server";
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
+import { Client } from "./client";
+import { Suspense } from "react";
 
-export default function Home() {
 
+const page = async ()=> {
+const queryClient = getQueryClient() ; 
+void queryClient.prefetchQuery(trpc.createAI.queryOptions({text : "divyansh prefetch"}))
+
+  const data = await caller.createAI({text : "divyansh server"})
   return (
- <div>
-  <h1> Hello world this is server component it doesn't wait it is faster than client </h1>
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <Suspense  fallback= {<p> Loading ... </p>}>
 
+<Client/>
+      </Suspense>
+ <div>
+{JSON.stringify(data)}
  </div>
+    </HydrationBoundary>
   );
 }
+// ...
+export default page ;
