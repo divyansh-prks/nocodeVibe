@@ -1,18 +1,10 @@
-'use client'
-import { useTRPC } from "@/trpc/client";
-import { useQuery } from "@tanstack/react-query";
-import Image from "next/image";
 
 export default function Home() {
-  const trpc = useTRPC() ; 
-  const {data } = useQuery(trpc.hello.queryOptions({text : "divyansh"}))
-  trpc.hello.queryOptions({text : "Hello "})
+
   return (
  <div>
-  <h1> Hello world </h1>
-  <div>
-    {JSON.stringify(data)}
-  </div>
+  <h1> Hello world this is server component it doesn't wait it is faster than client </h1>
+
  </div>
   );
 }
