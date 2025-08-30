@@ -1,26 +1,25 @@
+"use client";
 
-import { caller, getQueryClient, trpc } from "@/trpc/server";
-import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
-import { Client } from "./client";
-import { Suspense } from "react";
+import { Button } from "@/components/ui/button";
+// import { Button } from "@/components/ui/button";
+import { useTRPC } from "@/trpc/client";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "sonner";
 
-
-const page = async ()=> {
-const queryClient = getQueryClient() ; 
-void queryClient.prefetchQuery(trpc.createAI.queryOptions({text : "divyansh prefetch"}))
-
-  const data = await caller.createAI({text : "divyansh server"})
+const HomePage = () => {
+  const trpc = useTRPC();
+  const invoke = useMutation(trpc.invoke.mutationOptions({
+    onSuccess: () => {
+      toast.success("Background Job Started Successfully!");
+    }
+  }))
   return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
-      <Suspense  fallback= {<p> Loading ... </p>}>
-
-<Client/>
-      </Suspense>
- <div>
-{JSON.stringify(data)}
- </div>
-    </HydrationBoundary>
-  );
+    <div className="p-4 max-2-7xl mx-auto">
+      
+      
+      <Button onClick={() => invoke.mutate({ text: "divyansh" })}>Invoke Background Job</Button>
+    </div>
+  )
 }
-// ...
-export default page ;
+
+export default HomePage
