@@ -17,7 +17,7 @@ const HomePage = () => {
     <div className="p-4 max-2-7xl mx-auto">
       
       
-      <Button onClick={() => invoke.mutate({ text: "divyansh" })}>Invoke Background Job</Button>
+      <Button disabled={invoke.isPending} onClick={() => invoke.mutate({ text: "divyansh" })}>Invoke Background Job</Button>
     </div>
   )
 }
