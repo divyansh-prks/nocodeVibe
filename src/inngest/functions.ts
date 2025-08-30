@@ -37,6 +37,7 @@ export const helloWorld = inngest.createFunction(
         `Summarize : ${event.data.value} `
 
         );
+        //just testing 
 
         console.log(output)
     return {output};
